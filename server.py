@@ -11,7 +11,7 @@ import logging.config
 from flask import Flask, request, abort, jsonify
 
 app = Flask(__name__)
-PORT = os.environ['SERVER_PORT']
+PORT = 65432
 
 # connect to db
 conn_db = pymongo.MongoClient('server-mongo', 27017)
@@ -20,7 +20,7 @@ db = conn_db['test-json']
 
 def put_value(key, value):
 	# add key-value pair to cache
-	cache = redis.Redis(host='cache-redis', port=6379)
+	cache = redis.Redis(host='host-redis', port=6379)
 	cache.ping()
 	cache.set(key, pickle.dumps(value))
 	app.logger.debug('set value in cache for key [%s]', key)
@@ -79,7 +79,7 @@ def handle_get(key):
 		abort(400)
 
 	if not no_cache:
-		cache = redis.Redis(host='cache-redis', port=6379)
+		cache = redis.Redis(host='host-redis', port=6379)
 		cache.ping()
 		if cache.exists(key):
 			app.logger.debug('get value from cache for key [%s]', key)
@@ -103,7 +103,7 @@ def handle_get(key):
 @app.route('/<key>', methods=['DELETE'])
 def handle_delete(key):
 	app.logger.debug('delete for key [%s]', key)
-	cache = redis.Redis(host='cache-redis', port=6379)
+	cache = redis.Redis(host='host-redis', port=6379)
 	cache.ping()
 	if cache.exists(key):
 		app.logger.debug('value is deleted from cache for key [%s]', key)

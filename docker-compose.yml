@@ -1,0 +1,55 @@
+version: '3'
+
+services:
+  balancer:
+    build: ./balancer
+    volumes:
+    - /var/log:/var/log
+    ports:
+    - "2000:2000"
+    environment:
+    - PREFIX=OK
+    depends_on:
+    - server1
+    - server2
+
+  server1:
+    build: ./server
+    volumes:
+    - /var/log:/var/log
+    ports:
+    - "2001:2001"
+    environment:
+    - SERVER_PORT=2001
+    depends_on:
+    - cache-redis
+    - server-mongo
+
+  server2:
+    build: ./server
+    volumes:
+    - /var/log:/var/log
+    ports:
+    - "2002:2002"
+    environment:
+    - SERVER_PORT=2002
+    depends_on:
+    - cache-redis
+    - server-mongo
+
+  cache-redis:
+    image: redis
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+    - "7000:6379"
+    volumes:
+    - ./storage/redis/data:/data
+
+  server-mongo:
+    image: mongo
+    ports:
+    - "27017:27017"
+    volumes:
+    - ./storage/mongo/data:/data/db
+   
+

@@ -1,0 +1,13 @@
+language: python
+
+services:
+  - docker
+
+before_script:
+  docker-compose up
+  
+script:
+  - python3 test.py
+
+after_script:
+  - docker-compose down

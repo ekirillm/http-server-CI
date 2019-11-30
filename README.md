@@ -1,5 +1,6 @@
 # http-key-value-storage-server
 [![Build Status](https://travis-ci.org/ekirillm/http-server-CI.svg?branch=master)](https://travis-ci.org/ekirillm/http-server-CI)
+
 HTTP server with Docker Compose, Redis and MongoDB. 
 ## Usage
 * Start server: `docker-compose up`

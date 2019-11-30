@@ -3,6 +3,7 @@ version: '3'
 services:
   simple-server-cached:
     build: .
+    image: ekirillm/http-server
     volumes:
     - /var/log:/var/log
     ports:

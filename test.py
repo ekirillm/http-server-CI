@@ -17,7 +17,7 @@ class TestSet(unittest.TestCase):
         self.assertEqual(r.json(), msg)
 
     def test_simple_delete(self):
-        msg = {"message":"bbb"}
+        msg = {"message":"ccc"}
         r = requests.post('http://127.0.0.1:2000/1', data=json.dumps(msg), headers={'Content-Type': 'application/json'})
         r = requests.delete('http://127.0.0.1:2000/1')
         self.assertEqual(r.text, 'Ok')

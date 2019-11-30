@@ -4,9 +4,10 @@ services:
   - docker
 
 before_script:
-  docker-compose up -d
+  - docker-compose up -d
   
 script:
+  - sleep 2
   - python3 test.py
 
 after_script:
